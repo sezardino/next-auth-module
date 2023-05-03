@@ -4,22 +4,11 @@
 
 ### Code example
 
-```js
-import Cookie from "js-cookie";
+```ts
+import { QueryClient } from "@tanstack/react-query";
 
-class Cookies {
-  setCookie(name: string, value: string) {
-    Cookie.set(name, value);
-  }
-
-  getCookie(name: string) {
-    return Cookie.get(name);
-  }
-
-  removeCookie(name: string) {
-    Cookie.remove(name);
-  }
-}
-
-export const cookie = new Cookies();
+export const createQueryClient = () =>
+  new QueryClient({
+    defaultOptions: { queries: { refetchOnWindowFocus: false } },
+  });
 ```
