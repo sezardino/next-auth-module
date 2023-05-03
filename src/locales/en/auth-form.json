@@ -1,0 +1,40 @@
+{
+  "sign-in": {
+    "trigger": "Sign In",
+    "cta": {
+      "label": "Don't have an account?",
+      "link": "Sign Up"
+    }
+  },
+  "sign-up": {
+    "trigger": "Sign Up",
+    "cta": {
+      "label": "Already have an account?",
+      "link": "Sign In"
+    }
+  },
+  "fields": {
+    "email": {
+      "label": "Email",
+      "placeholder": "j.doe@mail.com",
+      "required": "Email is required",
+      "invalid": "Email is invalid"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Password1",
+      "required": "Password is required",
+      "to-short": "Password is to short"
+    },
+    "repeat": {
+      "label": "Password Confirmation",
+      "placeholder": "Password2",
+      "required": "Password Confirmation is required",
+      "to-short": "Password is to short",
+      "not-match": "Password Confirmation does not match"
+    },
+    "remember-me": {
+      "label": "Remember me"
+    }
+  }
+}

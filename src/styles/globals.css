@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply min-h-screen bg-gray-50 dark:bg-gray-900 text-black dark:text-white;
+}
+
+#__next {
+  @apply min-h-screen grid grid-cols-1 content-start grid-rows-1;
+}
