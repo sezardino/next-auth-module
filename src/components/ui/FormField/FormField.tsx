@@ -66,6 +66,10 @@ export const FormField: FC<FormFieldProps> = (props) => {
   const id = useId();
   const descriptionId = `${id}-description`;
   const errorId = `${id}-error`;
+  const labelPlacement =
+    "labelPlacement" in rest ? rest.labelPlacement : "left";
+
+  if ("labelPlacement" in rest) delete rest.labelPlacement;
 
   const hasError = Boolean(error);
 
@@ -111,9 +115,7 @@ export const FormField: FC<FormFieldProps> = (props) => {
         <span
           className={twMerge(
             isLabelHidden ? "sr-only" : "",
-            "labelPlacement" in rest &&
-              rest.labelPlacement === "right" &&
-              "order-1"
+            labelPlacement === "right" && "order-1"
           )}
         >
           {label}

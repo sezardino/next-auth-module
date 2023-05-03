@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ComponentPropsWithoutRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { Icon, IconNames } from "../Icon/Icon";
@@ -108,9 +109,9 @@ export const Button = (props: ButtonProps) => {
 
   if (href) {
     return (
-      <a {...(rest as any)} href={href} className={buttonStyles}>
+      <Link {...(rest as any)} href={href} className={buttonStyles}>
         {inner}
-      </a>
+      </Link>
     );
   }
 
