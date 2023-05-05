@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { apiService } from "@/services/api";
 
+import { tokenService } from "@/services/token";
 import { CURRENT_USER_QUERY_KEY } from "../queries/useCurrentUser";
 
 export const useSignOutMutation = () => {
@@ -12,6 +13,8 @@ export const useSignOutMutation = () => {
     onSuccess: () => {
       client.invalidateQueries([CURRENT_USER_QUERY_KEY]);
       client.clear();
+
+      tokenService.clear();
     },
   });
 };

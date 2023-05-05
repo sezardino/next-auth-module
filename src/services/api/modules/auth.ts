@@ -1,9 +1,10 @@
 import { AuthDto } from "@/types/dto";
+import { CurrentUserInfo } from "@/types/user";
 import { AbstractService } from "./abstract";
 
 export class AuthService extends AbstractService {
   async signIn(data: AuthDto) {
-    return this.fetch({
+    return this.fetch<{ access_token: string }, { error: string }>({
       url: "/auth/sign-in",
       method: "POST",
       data,
@@ -33,7 +34,7 @@ export class AuthService extends AbstractService {
   }
 
   async getCurrentUserInfo() {
-    return this.fetch({
+    return this.fetch<CurrentUserInfo>({
       url: "/auth",
       method: "GET",
     });

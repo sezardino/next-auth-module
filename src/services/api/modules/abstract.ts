@@ -1,8 +1,10 @@
 import { fetcher } from "@/libs/fetcher";
-import { AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export abstract class AbstractService {
-  protected fetch<Response>(config: AxiosRequestConfig) {
-    return fetcher<Response>(config);
+  protected fetch<Response, Error = { message: string }>(
+    config: AxiosRequestConfig
+  ) {
+    return fetcher<AxiosError<Error>, AxiosResponse<Response>>(config);
   }
 }

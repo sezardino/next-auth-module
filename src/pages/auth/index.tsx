@@ -5,15 +5,33 @@ import { useCallback } from "react";
 import { AuthFormValues } from "@/components/forms/Auth/AuthForm";
 import { AuthLayout } from "@/components/layouts/Auth/AuthLayout";
 import { AuthTemplate } from "@/components/templates/Auth/AuthTemplate";
+import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
+import { useSignInMutation } from "@/hooks/mutations/useSignIn";
 
 const SignInPage = () => {
-  const onSignIn = useCallback(async (values: AuthFormValues) => {
-    console.log(values);
+  const {
+    mutateAsync: signIn,
+    isLoading: isSignInLoading,
+    error,
+  } = useSignInMutation();
+
+  const signInHandler = useCallback(async (values: AuthFormValues) => {
+    try {
+      await signIn(values);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
     <AuthLayout>
-      <AuthTemplate type="sign-in" onAuthFormSubmit={onSignIn} />
+      {isSignInLoading && <LoadingOverlay />}
+
+      <AuthTemplate
+        type="sign-in"
+        onAuthFormSubmit={signInHandler}
+        errorMessage={error?.message}
+      />
     </AuthLayout>
   );
 };

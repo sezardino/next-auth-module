@@ -52,17 +52,16 @@ export const AuthForm: FC<AuthFormProps> = (props) => {
                   .string()
                   .optional(),
         })
-        .refine((data) => type === "sign-up" && data.password === data.repeat, {
-          path: ["repeat"],
-          message: t("fields.repeat.not-match"),
-        })
+        .refine(
+          (data) => (type === "sign-in" ? true : data.password === data.repeat),
+          { path: ["repeat"], message: t("fields.repeat.not-match") }
+        )
     ),
     onSubmit: onFormSubmit,
   });
 
   return (
     <FormikProvider value={form}>
-      {JSON.stringify(form.errors)}
       <Form
         {...rest}
         className={twMerge("space-y-4 md:space-y-6 mt-2", className)}
