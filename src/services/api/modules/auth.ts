@@ -27,7 +27,7 @@ export class AuthService extends AbstractService {
   }
 
   async refresh() {
-    return this.fetch({
+    return this.fetch<{ access_token: string }>({
       url: "/auth/refresh",
       method: "POST",
     });
