@@ -48,6 +48,7 @@
     "@tanstack/react-query-devtools": "^4.29.6",
     "@types/js-cookie": "^3.0.3",
     "eslint-plugin-storybook": "^0.6.12",
-    "storybook": "^7.0.8"
+    "storybook": "^7.0.8",
+    "storybook-react-i18next": "^2.0.1"
   }
 }

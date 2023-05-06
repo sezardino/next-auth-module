@@ -4,8 +4,10 @@ export enum UserRole {
   USER = "user",
 }
 
-export interface CurrentUserInfo {
+export interface User {
   email: string;
-  id: number;
+  id: string;
   role: UserRole;
 }
+
+export interface CurrentUserInfo extends User {}
