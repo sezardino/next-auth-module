@@ -6,6 +6,7 @@ export type FetcherResponse<TResponse> = AxiosResponse<TResponse>;
 
 const fetcherOptions: CreateAxiosDefaults = {
   baseURL: process.env.API_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -28,7 +29,7 @@ fetcher.interceptors.response.use(
   (response) => response,
   async (error) => {
     const token = tokenService.get();
-
+    return Promise.reject(error);
     if (!token) return Promise.reject(error);
 
     if (error.config._retry) return Promise.reject(error);
@@ -38,11 +39,9 @@ fetcher.interceptors.response.use(
 
     try {
       const response = await apiService.auth.refresh();
-
       if (!response.data.access_token) return Promise.reject(error);
-
       tokenService.save(response.data.access_token, "cookie");
-      return fetcher(error.config);
+      return Promise.reject(error);
     } catch (error) {
       return Promise.reject(error);
     }

@@ -1,27 +1,34 @@
 import { DefaultLayout } from "@/components/layouts/Default/DefaultLayout";
 import { UsersTemplate } from "@/components/templates/Users/UsersTemplate";
-import { User, UserRole } from "@/types/user";
-import { useState } from "react";
-
-const data: User[] = [
-  { id: "1", email: "e@mail.com", role: UserRole.USER },
-  { id: "2", email: "e@mail.com", role: UserRole.USER },
-  { id: "3", email: "e@mail.com", role: UserRole.USER },
-  { id: "4", email: "e@mail.com", role: UserRole.USER },
-];
+import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
+import { useDeleteUserMutation } from "@/hooks/mutations/useDeleteUser";
+import { useUsersQuery } from "@/hooks/queries/useUsers";
+import { useCallback, useState } from "react";
 
 const UsersPage = () => {
   const [page, setPage] = useState(0);
 
+  const { data: usersData, isLoading: isUsersDataLoading } = useUsersQuery({
+    page,
+  });
+
+  const { mutateAsync: deleteUser, isLoading: isDeleteLoading } =
+    useDeleteUserMutation();
+  const deleteUserHandler = useCallback(async (userId: string) => {
+    await deleteUser(userId);
+  }, []);
+
   return (
     <>
       <DefaultLayout>
+        {(isUsersDataLoading || isDeleteLoading) && <LoadingOverlay />}
+
         <UsersTemplate
-          data={data}
+          data={usersData?.data.data || []}
           page={page}
-          onUserDelete={async () => undefined}
+          onUserDelete={deleteUserHandler}
           onPageChange={setPage}
-          totalItems={1000}
+          totalItems={usersData?.data.meta.count || 0}
         />
       </DefaultLayout>
     </>

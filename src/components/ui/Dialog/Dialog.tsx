@@ -115,7 +115,7 @@ export const Dialog: FC<DialogProps> = (props) => {
             sizes[sizing],
             className
           )}
-          onClick={(evt) => evt.stopPropagation()}
+          onPointerDown={(evt) => evt.stopPropagation()}
         >
           <button
             type="button"
