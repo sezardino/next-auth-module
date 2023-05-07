@@ -1,4 +1,6 @@
-import { User, UserRole } from "@/types/user";
+import { ChangePasswordFormValues } from "@/components/forms/ChangePassword";
+import { UpdateProfileFormValues } from "@/components/forms/UpdateProfile";
+import { User, UserRole, UserWithProfile } from "@/types/user";
 import { AbstractService } from "./abstract";
 
 interface DataWithPagination<T> {
@@ -32,6 +34,29 @@ export class UsersService extends AbstractService {
     return await this.fetch<{ success: boolean }>({
       url: `/users/${id}`,
       method: "DELETE",
+    });
+  }
+
+  async update(data: UpdateProfileFormValues) {
+    return await this.fetch<User>({
+      url: "/users/profile",
+      method: "PUT",
+      data,
+    });
+  }
+
+  async getCurrentUser() {
+    return await this.fetch<UserWithProfile>({
+      url: "/users/profile",
+      method: "GET",
+    });
+  }
+
+  async changePassword(dto: ChangePasswordFormValues) {
+    return await this.fetch<User>({
+      url: "/users/password",
+      method: "PUT",
+      data: dto,
     });
   }
 }

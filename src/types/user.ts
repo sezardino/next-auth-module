@@ -11,3 +11,9 @@ export interface User {
 }
 
 export interface CurrentUserInfo extends User {}
+
+export interface UserWithProfile extends User {
+  name: string;
+  surname: string;
+  address: string;
+}

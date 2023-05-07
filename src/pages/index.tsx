@@ -5,6 +5,11 @@ import { ProjectUrl } from "@/const/project-url";
 
 const buttons = [
   {
+    label: "Settings",
+    href: ProjectUrl.Settings,
+    after: "admin | sub-admin | user",
+  },
+  {
     label: "Users",
     href: ProjectUrl.Users,
     after: "sub-admin | admin",
