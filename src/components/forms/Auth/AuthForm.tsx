@@ -19,7 +19,7 @@ export interface AuthFormValues {
 }
 
 export interface AuthFormProps extends ComponentPropsWithoutRef<"form"> {
-  type: "sign-up" | "sign-in";
+  type: "sign-up" | "sign-in" | "clean";
   onFormSubmit: (values: AuthFormValues) => void;
 }
 
@@ -53,7 +53,7 @@ export const AuthForm: FC<AuthFormProps> = (props) => {
                   .optional(),
         })
         .refine(
-          (data) => (type === "sign-in" ? true : data.password === data.repeat),
+          (data) => (type !== "sign-up" ? true : data.password === data.repeat),
           { path: ["repeat"], message: t("fields.repeat.not-match") }
         )
     ),
@@ -88,14 +88,15 @@ export const AuthForm: FC<AuthFormProps> = (props) => {
           />
         )}
 
-        <div className="flex gap-2 flex-wrap items-center justify-between">
+        {type !== "clean" && (
           <FormikFormField
             name="remember"
             type="checkbox"
             labelPlacement="right"
             label={t(`fields.remember-me.label`)}
+            className="flex gap-2 flex-wrap items-center justify-between"
           />
-        </div>
+        )}
         <Button
           type="submit"
           size="sm"
@@ -103,16 +104,18 @@ export const AuthForm: FC<AuthFormProps> = (props) => {
           text={t(`${type}.trigger`)}
         />
 
-        <Typography as="p" styling="capture">
-          {t(`${type}.cta.label`)}
-          <Button
-            variant="link"
-            size="xs"
-            href={type === "sign-in" ? ProjectUrl.SignUp : ProjectUrl.SignIn}
-            text={t(`${type}.cta.link`)}
-            className="ml-1"
-          />
-        </Typography>
+        {type !== "clean" && (
+          <Typography as="p" styling="capture">
+            {t(`${type}.cta.label`)}
+            <Button
+              variant="link"
+              size="xs"
+              href={type === "sign-in" ? ProjectUrl.SignUp : ProjectUrl.SignIn}
+              text={t(`${type}.cta.link`)}
+              className="ml-1"
+            />
+          </Typography>
+        )}
       </Form>
     </FormikProvider>
   );

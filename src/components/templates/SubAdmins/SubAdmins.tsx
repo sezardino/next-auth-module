@@ -1,3 +1,4 @@
+import { AuthFormValues } from "@/components/forms/Auth/AuthForm";
 import { CreateNewUserModal } from "@/components/modules/user/CreateNewUserModal/CreateNewUserModal";
 import { Button } from "@/components/ui/Button/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog/ConfirmDialog";
@@ -47,6 +48,11 @@ export const SubAdminsTemplate: FC<SubAdminsTemplateProps> = (props) => {
     closeDeleteModal();
   };
 
+  const subAdminCreateHandler = async (dto: AuthFormValues) => {
+    await onSubAdminCreate(dto);
+    setIsCreateModalOpen(false);
+  };
+
   const columns = useMemo<TableColumn<User>[]>(
     () => [
       {
@@ -84,7 +90,12 @@ export const SubAdminsTemplate: FC<SubAdminsTemplateProps> = (props) => {
             <Typography as="h1" styling="h1" text="Sub admins" />
             <Typography as="p" text="for admins" />
           </div>
-          <Button variant="green" size="sm" text="Create Sub Admin" />
+          <Button
+            variant="green"
+            size="sm"
+            text="Create Sub Admin"
+            onClick={() => setIsCreateModalOpen(true)}
+          />
         </header>
         <Table columns={columns} data={data} className="mt-5" />
 
@@ -116,7 +127,7 @@ export const SubAdminsTemplate: FC<SubAdminsTemplateProps> = (props) => {
         title="Create New User"
         isOpen={isCreateModalOpen}
         closeHandler={() => setIsCreateModalOpen(false)}
-        onFormSubmit={onSubAdminCreate}
+        onFormSubmit={subAdminCreateHandler}
       />
     </>
   );

@@ -17,7 +17,7 @@ export const CreateNewUserModal: FC<CreateNewUserModalProps> = (props) => {
     <Dialog {...rest} ariaLabelId={titleId}>
       <Typography as="h2" id={titleId} text={title} />
 
-      <AuthForm type="sign-up" onFormSubmit={onFormSubmit} />
+      <AuthForm type="clean" onFormSubmit={onFormSubmit} />
     </Dialog>
   );
 };
