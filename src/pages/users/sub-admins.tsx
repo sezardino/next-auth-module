@@ -1,17 +1,17 @@
 import { AuthFormValues } from "@/components/forms/Auth/AuthForm";
-import { DefaultLayout } from "@/components/layouts/Default/DefaultLayout";
 import { SubAdminsTemplate } from "@/components/templates/SubAdmins/SubAdmins";
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
 import { Seo } from "@/components/ui/Seo";
 import { useCreateSubAdminMutation } from "@/hooks/mutations/useCreateSubAdmin";
 import { useDeleteUserMutation } from "@/hooks/mutations/useDeleteUser";
 import { useUsersQuery } from "@/hooks/queries/useUsers";
+import { CustomPage } from "@/types/page";
 import { UserRole } from "@/types/user";
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useCallback, useState } from "react";
 
-const UsersPage = () => {
+const UsersPage: CustomPage = () => {
   const [page, setPage] = useState(0);
 
   const { data: usersData, isLoading: isUsersDataLoading } = useUsersQuery({
@@ -36,20 +36,18 @@ const UsersPage = () => {
   return (
     <>
       <Seo title="Sub-admins" />
-      <DefaultLayout>
-        {(isUsersDataLoading || isCreateLoading || isDeleteLoading) && (
-          <LoadingOverlay />
-        )}
+      {(isUsersDataLoading || isCreateLoading || isDeleteLoading) && (
+        <LoadingOverlay />
+      )}
 
-        <SubAdminsTemplate
-          data={usersData?.data.data || []}
-          page={page}
-          onUserDelete={deleteUserHandler}
-          onPageChange={setPage}
-          totalItems={usersData?.data.meta.count || 0}
-          onSubAdminCreate={createSubAdminHandler}
-        />
-      </DefaultLayout>
+      <SubAdminsTemplate
+        data={usersData?.data.data || []}
+        page={page}
+        onUserDelete={deleteUserHandler}
+        onPageChange={setPage}
+        totalItems={usersData?.data.meta.count || 0}
+        onSubAdminCreate={createSubAdminHandler}
+      />
     </>
   );
 };

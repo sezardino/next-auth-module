@@ -1,12 +1,12 @@
-import { DefaultLayout } from "@/components/layouts/Default/DefaultLayout";
 import { UsersTemplate } from "@/components/templates/Users/UsersTemplate";
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
 import { Seo } from "@/components/ui/Seo";
 import { useDeleteUserMutation } from "@/hooks/mutations/useDeleteUser";
 import { useUsersQuery } from "@/hooks/queries/useUsers";
+import { CustomPage } from "@/types/page";
 import { useCallback, useState } from "react";
 
-const UsersPage = () => {
+const UsersPage: CustomPage = () => {
   const [page, setPage] = useState(0);
 
   const { data: usersData, isLoading: isUsersDataLoading } = useUsersQuery({
@@ -21,18 +21,16 @@ const UsersPage = () => {
 
   return (
     <>
+      {(isUsersDataLoading || isDeleteLoading) && <LoadingOverlay />}
       <Seo title="Users" />
-      <DefaultLayout>
-        {(isUsersDataLoading || isDeleteLoading) && <LoadingOverlay />}
 
-        <UsersTemplate
-          data={usersData?.data.data || []}
-          page={page}
-          onUserDelete={deleteUserHandler}
-          onPageChange={setPage}
-          totalItems={usersData?.data.meta.count || 0}
-        />
-      </DefaultLayout>
+      <UsersTemplate
+        data={usersData?.data.data || []}
+        page={page}
+        onUserDelete={deleteUserHandler}
+        onPageChange={setPage}
+        totalItems={usersData?.data.meta.count || 0}
+      />
     </>
   );
 };

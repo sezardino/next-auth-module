@@ -8,8 +8,9 @@ import { AuthTemplate } from "@/components/templates/Auth/AuthTemplate";
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
 import { Seo } from "@/components/ui/Seo";
 import { useSignInMutation } from "@/hooks/mutations/useSignIn";
+import { CustomPage } from "@/types/page";
 
-const SignInPage = () => {
+const SignInPage: CustomPage = () => {
   const {
     mutateAsync: signIn,
     isLoading: isSignInLoading,
@@ -42,6 +43,8 @@ const SignInPage = () => {
 };
 
 export default SignInPage;
+
+SignInPage.layout = "auth";
 
 export const getStaticProps: GetStaticProps = async ({ locale = "en" }) => {
   return {

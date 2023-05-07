@@ -6,18 +6,29 @@ import { useRef } from "react";
 
 import { createQueryClient } from "@/libs/query";
 
+import { PageWrapper } from "@/components/layouts/PageWrapper";
 import { Seo } from "@/components/ui/Seo";
+import { UserRoleProvider } from "@/context/UserRoleContext";
 import "@/styles/globals.css";
+import { CustomPage } from "@/types/page";
 
-const App = ({ Component, pageProps }: AppProps) => {
+type CustomAppProps = AppProps & {
+  Component: CustomPage;
+};
+
+const App = ({ Component, pageProps }: CustomAppProps) => {
   const queryClient = useRef(createQueryClient());
-
+  console.log(pageProps);
   return (
     <QueryClientProvider client={queryClient.current}>
       <Hydrate state={pageProps.dehydratedState}>
-        <Seo />
-        <Component {...pageProps} />
-        <ReactQueryDevtools />
+        <UserRoleProvider>
+          <Seo />
+          <PageWrapper layout={Component.layout} role={Component.role}>
+            <Component {...pageProps} />
+          </PageWrapper>
+          <ReactQueryDevtools />
+        </UserRoleProvider>
       </Hydrate>
     </QueryClientProvider>
   );

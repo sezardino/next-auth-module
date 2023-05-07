@@ -5,9 +5,10 @@ import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
 import { Seo } from "@/components/ui/Seo";
 import { useUpdateUserProfileMutation } from "@/hooks/mutations/useUpdateUserProfile";
 import { useUserProfileQuery } from "@/hooks/queries/useUserProfile";
+import { CustomPage } from "@/types/page";
 import { useCallback } from "react";
 
-const SettingsPage = () => {
+const SettingsPage: CustomPage = () => {
   const { data: profileData, isLoading: isProfileLoading } =
     useUserProfileQuery();
 
