@@ -1,6 +1,7 @@
 import { DefaultLayout } from "@/components/layouts/Default/DefaultLayout";
 import { UsersTemplate } from "@/components/templates/Users/UsersTemplate";
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
+import { Seo } from "@/components/ui/Seo";
 import { useDeleteUserMutation } from "@/hooks/mutations/useDeleteUser";
 import { useUsersQuery } from "@/hooks/queries/useUsers";
 import { useCallback, useState } from "react";
@@ -20,6 +21,7 @@ const UsersPage = () => {
 
   return (
     <>
+      <Seo title="Users" />
       <DefaultLayout>
         {(isUsersDataLoading || isDeleteLoading) && <LoadingOverlay />}
 

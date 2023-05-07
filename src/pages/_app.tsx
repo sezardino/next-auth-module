@@ -6,6 +6,7 @@ import { useRef } from "react";
 
 import { createQueryClient } from "@/libs/query";
 
+import { Seo } from "@/components/ui/Seo";
 import "@/styles/globals.css";
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -14,6 +15,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient.current}>
       <Hydrate state={pageProps.dehydratedState}>
+        <Seo />
         <Component {...pageProps} />
         <ReactQueryDevtools />
       </Hydrate>

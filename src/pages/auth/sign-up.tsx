@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { AuthFormValues } from "@/components/forms/Auth/AuthForm";
 import { AuthLayout } from "@/components/layouts/Auth/AuthLayout";
 import { AuthTemplate } from "@/components/templates/Auth/AuthTemplate";
+import { Seo } from "@/components/ui/Seo";
 
 const SignUpPage = () => {
   const onSignUp = useCallback(async (values: AuthFormValues) => {
@@ -12,9 +13,12 @@ const SignUpPage = () => {
   }, []);
 
   return (
-    <AuthLayout>
-      <AuthTemplate type="sign-up" onAuthFormSubmit={onSignUp} />
-    </AuthLayout>
+    <>
+      <Seo title="Sign Up" />
+      <AuthLayout>
+        <AuthTemplate type="sign-up" onAuthFormSubmit={onSignUp} />
+      </AuthLayout>
+    </>
   );
 };
 

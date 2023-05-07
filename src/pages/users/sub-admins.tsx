@@ -2,6 +2,7 @@ import { AuthFormValues } from "@/components/forms/Auth/AuthForm";
 import { DefaultLayout } from "@/components/layouts/Default/DefaultLayout";
 import { SubAdminsTemplate } from "@/components/templates/SubAdmins/SubAdmins";
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
+import { Seo } from "@/components/ui/Seo";
 import { useCreateSubAdminMutation } from "@/hooks/mutations/useCreateSubAdmin";
 import { useDeleteUserMutation } from "@/hooks/mutations/useDeleteUser";
 import { useUsersQuery } from "@/hooks/queries/useUsers";
@@ -34,6 +35,7 @@ const UsersPage = () => {
 
   return (
     <>
+      <Seo title="Sub-admins" />
       <DefaultLayout>
         {(isUsersDataLoading || isCreateLoading || isDeleteLoading) && (
           <LoadingOverlay />
