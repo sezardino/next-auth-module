@@ -45,6 +45,7 @@ const SignInPage: CustomPage = () => {
 export default SignInPage;
 
 SignInPage.layout = "auth";
+SignInPage.auth = false;
 
 export const getStaticProps: GetStaticProps = async ({ locale = "en" }) => {
   return {

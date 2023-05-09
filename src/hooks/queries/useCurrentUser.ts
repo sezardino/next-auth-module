@@ -6,7 +6,7 @@ export const CURRENT_USER_QUERY_KEY = "current-user";
 export const useCurrentUserQuery = () =>
   useQuery({
     queryKey: [CURRENT_USER_QUERY_KEY],
-    queryFn: () => apiService.auth.getCurrentUserInfo().then((res) => res.data),
+    queryFn: () => apiService.auth.getCurrentUserInfo(),
     retry: false,
     staleTime: Infinity,
   });

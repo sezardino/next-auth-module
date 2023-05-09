@@ -5,13 +5,12 @@ import { useCallback } from "react";
 import { AuthFormValues } from "@/components/forms/Auth/AuthForm";
 import { AuthLayout } from "@/components/layouts/Auth/AuthLayout";
 import { AuthTemplate } from "@/components/templates/Auth/AuthTemplate";
+import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
 import { Seo } from "@/components/ui/Seo";
 import { ProjectUrl } from "@/const/project-url";
 import { useSignUpMutation } from "@/hooks/mutations/useSignUp";
 import { CustomPage } from "@/types/page";
 import { useRouter } from "next/router";
-import SignInPage from ".";
-import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
 
 const SignUpPage: CustomPage = () => {
   const { mutateAsync: signUp, isLoading: isSignUpLoading } =
@@ -37,7 +36,8 @@ const SignUpPage: CustomPage = () => {
 
 export default SignUpPage;
 
-SignInPage.layout = "auth";
+SignUpPage.layout = "auth";
+SignUpPage.auth = false;
 
 export const getStaticProps: GetStaticProps = async ({ locale = "en" }) => {
   return {

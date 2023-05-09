@@ -4,6 +4,9 @@ import { Seo } from "@/components/ui/Seo";
 import { useDeleteUserMutation } from "@/hooks/mutations/useDeleteUser";
 import { useUsersQuery } from "@/hooks/queries/useUsers";
 import { CustomPage } from "@/types/page";
+import { UserRole } from "@/types/user";
+import { GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useCallback, useState } from "react";
 
 const UsersPage: CustomPage = () => {
@@ -36,3 +39,11 @@ const UsersPage: CustomPage = () => {
 };
 
 export default UsersPage;
+
+UsersPage.roles = [UserRole.ADMIN, UserRole.SUB_ADMIN];
+
+export const getStaticProps: GetStaticProps = async ({ locale = "en" }) => {
+  return {
+    props: { ...(await serverSideTranslations(locale)) },
+  };
+};

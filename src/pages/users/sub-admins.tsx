@@ -11,7 +11,7 @@ import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useCallback, useState } from "react";
 
-const UsersPage: CustomPage = () => {
+const SubAdminsPage: CustomPage = () => {
   const [page, setPage] = useState(0);
 
   const { data: usersData, isLoading: isUsersDataLoading } = useUsersQuery({
@@ -52,7 +52,9 @@ const UsersPage: CustomPage = () => {
   );
 };
 
-export default UsersPage;
+export default SubAdminsPage;
+
+SubAdminsPage.roles = [UserRole.ADMIN];
 
 export const getStaticProps: GetStaticProps = async ({ locale = "en" }) => {
   return {

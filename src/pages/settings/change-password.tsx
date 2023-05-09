@@ -4,6 +4,9 @@ import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
 import { Seo } from "@/components/ui/Seo";
 import { useUpdatePasswordMutation } from "@/hooks/mutations/useUpdatePassword";
 import { CustomPage } from "@/types/page";
+import { UserRole } from "@/types/user";
+import { GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useCallback } from "react";
 
 const SettingsPage: CustomPage = () => {
@@ -27,3 +30,11 @@ const SettingsPage: CustomPage = () => {
 };
 
 export default SettingsPage;
+
+SettingsPage.roles = [UserRole.USER, UserRole.SUB_ADMIN];
+
+export const getStaticProps: GetStaticProps = async ({ locale = "en" }) => {
+  return {
+    props: { ...(await serverSideTranslations(locale)) },
+  };
+};
