@@ -2,21 +2,39 @@ import { Hydrate, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { appWithTranslation } from "next-i18next";
 import type { AppProps } from "next/app";
-import { useRef } from "react";
 
 import { createQueryClient } from "@/libs/query";
 
+import { PageWrapper } from "@/components/layouts/PageWrapper";
+import { Seo } from "@/components/ui/Seo";
+import { UserRoleProvider } from "@/context/UserRoleContext";
 import "@/styles/globals.css";
+import { CustomPage } from "@/types/page";
+import { useState } from "react";
 
-const App = ({ Component, pageProps }: AppProps) => {
-  const queryClient = useRef(createQueryClient());
+type CustomAppProps = AppProps & {
+  Component: CustomPage;
+};
+
+// const client = createQueryClient();
+const App = ({ Component, pageProps }: CustomAppProps) => {
+  const [client] = useState(() => createQueryClient());
 
   return (
-    <QueryClientProvider client={queryClient.current}>
+    <QueryClientProvider client={client}>
       <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
-        <ReactQueryDevtools />
+        <Seo />
+        <UserRoleProvider>
+          <PageWrapper
+            layout={Component.layout}
+            roles={Component.roles}
+            auth={Component.auth}
+          >
+            <Component {...pageProps} />
+          </PageWrapper>
+        </UserRoleProvider>
       </Hydrate>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };

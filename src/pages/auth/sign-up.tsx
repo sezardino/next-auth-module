@@ -5,20 +5,39 @@ import { useCallback } from "react";
 import { AuthFormValues } from "@/components/forms/Auth/AuthForm";
 import { AuthLayout } from "@/components/layouts/Auth/AuthLayout";
 import { AuthTemplate } from "@/components/templates/Auth/AuthTemplate";
+import { LoadingOverlay } from "@/components/ui/LoadingOverlay/LoadingOverlay";
+import { Seo } from "@/components/ui/Seo";
+import { ProjectUrl } from "@/const/project-url";
+import { useSignUpMutation } from "@/hooks/mutations/useSignUp";
+import { CustomPage } from "@/types/page";
+import { useRouter } from "next/router";
 
-const SignUpPage = () => {
+const SignUpPage: CustomPage = () => {
+  const { mutateAsync: signUp, isLoading: isSignUpLoading } =
+    useSignUpMutation();
+  const router = useRouter();
+
   const onSignUp = useCallback(async (values: AuthFormValues) => {
-    console.log(values);
+    await signUp(values);
+
+    router.push(ProjectUrl.Home);
   }, []);
 
   return (
-    <AuthLayout>
-      <AuthTemplate type="sign-up" onAuthFormSubmit={onSignUp} />
-    </AuthLayout>
+    <>
+      {isSignUpLoading && <LoadingOverlay />}
+      <Seo title="Sign Up" />
+      <AuthLayout>
+        <AuthTemplate type="sign-up" onAuthFormSubmit={onSignUp} />
+      </AuthLayout>
+    </>
   );
 };
 
 export default SignUpPage;
+
+SignUpPage.layout = "auth";
+SignUpPage.auth = false;
 
 export const getStaticProps: GetStaticProps = async ({ locale = "en" }) => {
   return {

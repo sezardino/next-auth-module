@@ -28,12 +28,15 @@ fetcher.interceptors.request.use((config) => {
 fetcher.interceptors.response.use(
   (response) => response,
   async (error) => {
+    const originalRequest = error.config;
+
+    if (originalRequest._retry) return Promise.reject(error);
+
     const token = tokenService.get();
-    return Promise.reject(error);
+
     if (!token) return Promise.reject(error);
 
-    if (error.config._retry) return Promise.reject(error);
-    error.config._retry = true;
+    originalRequest._retry = true;
 
     if (error.response.status !== 401) return Promise.reject(error);
 
@@ -41,7 +44,7 @@ fetcher.interceptors.response.use(
       const response = await apiService.auth.refresh();
       if (!response.data.access_token) return Promise.reject(error);
       tokenService.save(response.data.access_token, "cookie");
-      return Promise.reject(error);
+      return fetcher.request(originalRequest);
     } catch (error) {
       return Promise.reject(error);
     }
